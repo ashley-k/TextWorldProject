@@ -16,7 +16,11 @@ public class Chicken extends Creature {
     public void move(Graph.Node playerRoom){
         HashMap<String, Graph.Node> neighborMap = currentRoom.getNeighborList();
         ArrayList<Graph.Node> neighbors = new ArrayList<Graph.Node>(neighborMap.values());
+
         int rand = (int)(Math.random()*neighbors.size());
+        Graph.Node newRoom = neighbors.get(rand);
+
+        updateRooms(currentRoom, newRoom);
         setCurrentRoom(neighbors.get(rand));
     }
 
