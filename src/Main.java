@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -16,6 +17,12 @@ public class Main {
         g.getNode("dungeon").addItem("flashlight");
         g.getNode("closet").addItem("shirt");
 
+        ArrayList<Creature> creature = new ArrayList<Creature>();
+        Creature c1 = new Chicken(g.getNode("hall"), "chicken1", "a chicken");
+        Creature c2 = new Chicken(g.getNode("hall"), "chicken2", "a chicken");
+        Creature c3 = new Chicken(g.getNode("hall"), "chicken3", "a chicken");
+        creature.add(c1); creature.add(c2); creature.add(c3);
+
         Player player = new Player("User", "Person using this computer.");
         player.setCurrentRoom(g.getNode("hall"));
 
@@ -32,7 +39,7 @@ public class Main {
 
             if(length >= 3 && response.substring(0,3).equals("go ")){
                 String roomName = response.substring(3);
-                if(g.getNode(roomName) != null && currentRoom.isNeighbor(roomName))
+                if(g.getNode(roomName) != null && currentRoom.hasNeighbor(roomName))
                     player.setCurrentRoom(g.getNode(roomName));
                 else System.out.println("Invalid room name.");
             }
@@ -40,6 +47,7 @@ public class Main {
                 System.out.println("Room description: " + currentRoom.getDescription());
                 System.out.println("Exits: " + currentRoom.getNeighborNames());
                 System.out.println("Items: " + currentRoom.displayItems());
+                System.out.println("Creatures: " + currentRoom.getCreatureNames());
             }
             else if(length >= 8 && response.substring(0,8).equals("add room")) {
                 String roomName = response.substring(9);
@@ -75,6 +83,7 @@ public class Main {
             else {
                 displayCommands();
             }
+
         } while(!response.equals("quit"));
     }
 
