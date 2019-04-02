@@ -4,10 +4,12 @@ import java.util.HashMap;
 public class Wumpus extends Creature {
     public Wumpus(Graph.Node currentRoom){
         super(currentRoom);
+        this.name = "wumpus";
+        this.description = "a wumpus";
     }
 
-    public Wumpus(Graph.Node currentRoom, String description){
-        super(currentRoom, description);
+    public Wumpus(Graph.Node currentRoom, String name, String description){
+        super(currentRoom, name, description);
     }
 
     @Override

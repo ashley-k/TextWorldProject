@@ -4,10 +4,12 @@ import java.util.HashMap;
 public class Chicken extends Creature {
     public Chicken(Graph.Node currentRoom){
         super(currentRoom);
+        this.name = "chicken";
+        this.description = "a white chicken";
     }
 
-    public Chicken(Graph.Node currentRoom, String description){
-        super(currentRoom, description);
+    public Chicken(Graph.Node currentRoom, String name, String description){
+        super(currentRoom, name, description);
     }
 
     @Override

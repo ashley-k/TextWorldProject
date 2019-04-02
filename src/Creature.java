@@ -1,13 +1,15 @@
 public abstract class Creature {
     protected Graph.Node currentRoom;
     protected String description;
+    protected String name;
 
     public Creature(Graph.Node currentRoom){
         this.currentRoom = currentRoom;
     }
 
-    public Creature(Graph.Node currentRoom, String description){
+    public Creature(Graph.Node currentRoom, String name, String description){
         this.currentRoom = currentRoom;
+        this.name = name;
         this.description = description;
     }
 
@@ -27,5 +29,13 @@ public abstract class Creature {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
