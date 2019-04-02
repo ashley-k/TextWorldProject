@@ -5,12 +5,14 @@ public abstract class Creature {
 
     public Creature(Graph.Node currentRoom){
         this.currentRoom = currentRoom;
+        currentRoom.addCreature(this);
     }
 
     public Creature(Graph.Node currentRoom, String name, String description){
         this.currentRoom = currentRoom;
         this.name = name;
         this.description = description;
+        currentRoom.addCreature(this);
     }
 
     public abstract void move(Graph.Node playerRoom);
