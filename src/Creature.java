@@ -15,6 +15,11 @@ public abstract class Creature {
 
     public abstract void move(Graph.Node playerRoom);
 
+    public void updateRooms(Graph.Node prevRoom, Graph.Node newRoom){
+        prevRoom.removeCreature(this);
+        newRoom.addCreature(this);
+    }
+
     public Graph.Node getCurrentRoom() {
         return currentRoom;
     }
