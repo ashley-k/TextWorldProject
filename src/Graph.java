@@ -44,16 +44,22 @@ public class Graph {
         private String name;
         private String description;
         private HashMap<String, Item> items;
+        private ArrayList<Creature> creatures;
 
         private Node(String name, String description) {
             neighbors = new HashMap<String, Node>();
             items = new HashMap<String, Item>();
+            creatures = new ArrayList<Creature>();
             this.name = name;
             this.description = description;
         }
 
         private void addNeighbor(Node n){
             neighbors.put(n.getName(), n);
+        }
+
+        public HashMap<String, Node> getNeighborList(){
+            return neighbors;
         }
 
         public String getNeighborNames(){
@@ -72,7 +78,7 @@ public class Graph {
             return name;
         }
 
-        public boolean isNeighbor(String name) {
+        public boolean hasNeighbor(String name) {
             if(neighbors.get(name) == null) return false;
             return true;
         }
@@ -119,6 +125,35 @@ public class Graph {
             if(items.get(name) == null) return false;
             items.remove(name);
             return true;
+        }
+
+        public void addCreature(Creature creature){
+            creatures.add(creature);
+        }
+
+        public void removeCreature(Creature creature){
+            for(int i = 0; i < creatures.size(); i++){
+                Creature c = creatures.get(i);
+                if(c.equals(creature))
+                    creatures.remove(i);
+            }
+        }
+
+        public Creature removeCreature(String name){
+            for(int i = 0; i < creatures.size(); i++){
+                Creature c = creatures.get(i);
+                if(c.getName().equals(name))
+                    return creatures.remove(i);
+            }
+            return null;
+        }
+
+        public String getCreatureNames(){
+            String result = "";
+            for(Creature c : creatures){
+                result = result + c.getName() + " ";
+            }
+            return result;
         }
     }
 }
