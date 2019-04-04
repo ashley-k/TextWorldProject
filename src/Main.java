@@ -5,23 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Graph g = new Graph();
-        g.addNode("hall", "a long dank hallway");
-        g.addNode("closet", "a dark, dark closet");
-        g.addNode("dungeon", "a cold, empty dungeon");
-
-        g.addDirectedEdge("hall", "dungeon");
-        g.addUndirectedEdge("hall", "closet");
-
-        g.getNode("hall").addItem("backpack");
-        g.getNode("hall").addItem("gun");
-        g.getNode("dungeon").addItem("flashlight");
-        g.getNode("closet").addItem("shirt");
-
-        ArrayList<Creature> creatures = new ArrayList<Creature>();
-        Creature c1 = new Chicken(g.getNode("hall"), "chicken1", "a chicken");
-        Creature c2 = new Chicken(g.getNode("hall"), "chicken2", "a chicken");
-        Creature c3 = new Chicken(g.getNode("hall"), "chicken3", "a chicken");
-        creatures.add(c1); creatures.add(c2); creatures.add(c3);
+        g.initialize();
 
         Player player = new Player("User", "Person using this computer.");
         player.setCurrentRoom(g.getNode("hall"));
@@ -40,8 +24,10 @@ public class Main {
 
             if(length >= 3 && response.substring(0,3).equals("go ")){
                 String roomName = response.substring(3);
-                if(g.getNode(roomName) != null && currentRoom.hasNeighbor(roomName))
+                if(g.getNode(roomName) != null && currentRoom.hasNeighbor(roomName)) {
                     player.setCurrentRoom(g.getNode(roomName));
+                    currentRoom = g.getNode(roomName);
+                }
                 else System.out.println("Invalid room name.");
             }
             else if(response.equals("look")){
@@ -89,16 +75,14 @@ public class Main {
             else {
                 displayCommands();
             }
-            moveAllCreature(currentRoom, creatures);
+            System.out.println("Player is in: " + currentRoom.getName());
+            moveAllCreature(currentRoom, g.getCreatures());
         } while(!response.equals("quit"));
     }
 
     private static void moveAllCreature(Graph.Node currentRoom, ArrayList<Creature> creatures) {
         for(Creature c : creatures){
             c.move(currentRoom);
-            if(c.getCurrentRoom().equals(currentRoom)){
-                System.out.println(c.getName() + " moved into your room!");
-            }
         }
     }
 
