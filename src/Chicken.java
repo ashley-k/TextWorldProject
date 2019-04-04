@@ -16,7 +16,7 @@ public class Chicken extends Creature {
     public void move(Graph.Node playerRoom){
         Graph.Node newRoom = currentRoom.getRandomNeighbor();
         if(newRoom != null) {
-            moveToRoom(newRoom, playerRoom);
+            moveToRoom(playerRoom, currentRoom, newRoom);
             //System.out.println(name + " moved to " + newRoom.getName());
         }
     }

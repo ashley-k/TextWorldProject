@@ -17,15 +17,20 @@ public abstract class Creature {
 
     public abstract void move(Graph.Node playerRoom);
 
-    public void moveToRoom(Graph.Node next, Graph.Node playerRoom){
-        currentRoom.removeCreature(this);
-        setCurrentRoom(next);
-        next.addCreature(this);
+    public void moveToRoom(Graph.Node playerRoom, Graph.Node currentRoom, Graph.Node nextRoom){
+        displayEntranceOrExit(playerRoom, currentRoom, nextRoom);
 
-        if(next.equals(playerRoom))
-            System.out.println(name + " moved into your room!");
+        currentRoom.removeCreature(this);
+        setCurrentRoom(nextRoom);
+        nextRoom.addCreature(this);
     }
 
+    private void displayEntranceOrExit(Graph.Node playerRoom, Graph.Node currentRoom, Graph.Node nextRoom){
+        if(currentRoom.equals(playerRoom))
+            System.out.println(name + " moved out of your room into " + nextRoom.getName());
+        if(nextRoom.equals(playerRoom))
+            System.out.println(name + " moved from the " + currentRoom.getName() + " to your room");
+    }
     public Graph.Node getCurrentRoom() {
         return currentRoom;
     }
