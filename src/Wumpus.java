@@ -14,13 +14,17 @@ public class Wumpus extends Creature {
 
     @Override
     public void move(Graph.Node playerRoom) {
-        if(playerRoom.hasNeighbor(currentRoom.getName()) && currentRoom.getNumNeighbors() >= 1){
+        if(playerRoom.hasNeighbor(currentRoom.getName()) && currentRoom.getNumNeighbors() >= 1){ //if in adjacent room
             if((currentRoom.getNumNeighbors()== 1 && currentRoom.getNeighbor(playerRoom.getName()) == null) || currentRoom.getNumNeighbors() > 1){ //if current has at least 2 neighbors or it has 1 neighbor which is not the playerRoom
                 Graph.Node nextRoom = currentRoom.getRandomNeighbor();
                 while(nextRoom.equals(playerRoom)){
                     nextRoom = currentRoom.getRandomNeighbor();
                 }
-                System.out.println(name + " moved from " + currentRoom.getName() + " to " + nextRoom.getName());
+                moveToRoom(playerRoom, currentRoom, nextRoom);
+            }
+        } else if(playerRoom.equals(currentRoom)){
+            Graph.Node nextRoom = currentRoom.getRandomNeighbor();
+            if(nextRoom != null){
                 moveToRoom(playerRoom, currentRoom, nextRoom);
             }
         }
