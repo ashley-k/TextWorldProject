@@ -75,7 +75,6 @@ public class Main {
             else {
                 displayCommands();
             }
-            System.out.println("Player is in: " + currentRoom.getName());
             moveAllCreature(currentRoom, g.getCreatures());
         } while(!response.equals("quit"));
     }

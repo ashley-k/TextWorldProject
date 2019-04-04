@@ -10,7 +10,7 @@ public class Graph {
         nodes = new HashMap<String, Node>();
     }
 
-    public void initalize(){
+    public void initialize(){
         addNode("hall", "a long dank hallway");
         addNode("closet", "a dark, dark closet");
         addNode("dungeon", "a cold, empty dungeon");
@@ -30,8 +30,13 @@ public class Graph {
         Wumpus w1 = new Wumpus(getNode("hall"), "wumpus1", "a wumpus");
         Wumpus w2 = new Wumpus(getNode("hall"), "wumpus2", "a wumpus");
         Wumpus w3 = new Wumpus(getNode("hall"), "wumpus3", "a wumpus");
+        Popstar p1 = new Popstar(getNode("hall"), "popstar1", "a postar");
+        Popstar p2 = new Popstar(getNode("hall"), "popstar2", "a postar");
+        Popstar p3 = new Popstar(getNode("hall"), "popstar3", "a postar");
 
-        creatures.add(c1); creatures.add(c2); creatures.add(c3); creatures.add(w1); creatures.add(w2); creatures.add(w3);
+        creatures.add(c1); creatures.add(c2); creatures.add(c3);
+        creatures.add(w1); creatures.add(w2); creatures.add(w3);
+        creatures.add(p1); creatures.add(p2); creatures.add(p3);
     }
 
     public ArrayList<Creature> getCreatures(){
