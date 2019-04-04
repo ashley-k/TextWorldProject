@@ -25,6 +25,10 @@ public class Graph {
         n1.addNeighbor(n2);
     }
 
+    public void addDirectedEdge(Node n1, Node n2){
+        n1.addNeighbor(n2);
+    }
+
     public void addUndirectedEdge(String name1, String name2) {
         Node n1 = getNode(name1);
         Node n2 = getNode(name2);
@@ -37,6 +41,11 @@ public class Graph {
             if(key.equals(name)) return nodes.get(key);
         }
         return null;
+    }
+
+    public boolean hasExistingNode(String name){
+        if(nodes.get(name) == null) return false;
+        return true;
     }
 
     public class Node{
@@ -154,6 +163,14 @@ public class Graph {
                 result = result + c.getName() + " ";
             }
             return result;
+        }
+
+        public Graph.Node getRandomNeighbor(){
+            if(neighbors.size() == 0) return null;
+            ArrayList<Graph.Node> neighborList = new ArrayList<Graph.Node>(neighbors.values());
+            int rand = (int) (Math.random() * neighbors.size());
+            Graph.Node newRoom = neighborList.get(rand);
+            return newRoom;
         }
     }
 }
