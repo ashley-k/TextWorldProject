@@ -17,10 +17,13 @@ public abstract class Creature {
 
     public abstract void move(Graph.Node playerRoom);
 
-    public void moveToRoom(Graph.Node next){
+    public void moveToRoom(Graph.Node next, Graph.Node playerRoom){
         currentRoom.removeCreature(this);
         setCurrentRoom(next);
         next.addCreature(this);
+
+        if(next.equals(playerRoom))
+            System.out.println(name + " moved into your room!");
     }
 
     public Graph.Node getCurrentRoom() {
