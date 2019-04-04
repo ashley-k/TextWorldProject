@@ -4,9 +4,38 @@ import java.util.List;
 
 public class Graph {
     private HashMap<String, Node> nodes;
+    private ArrayList<Creature> creatures;
 
     public Graph(){
         nodes = new HashMap<String, Node>();
+    }
+
+    public void initalize(){
+        addNode("hall", "a long dank hallway");
+        addNode("closet", "a dark, dark closet");
+        addNode("dungeon", "a cold, empty dungeon");
+
+        addDirectedEdge("hall", "dungeon");
+        addUndirectedEdge("hall", "closet");
+
+        getNode("hall").addItem("backpack");
+        getNode("hall").addItem("gun");
+        getNode("dungeon").addItem("flashlight");
+        getNode("closet").addItem("shirt");
+
+        creatures = new ArrayList<Creature>();
+        Creature c1 = new Chicken(getNode("hall"), "chicken1", "a chicken");
+        Creature c2 = new Chicken(getNode("hall"), "chicken2", "a chicken");
+        Creature c3 = new Chicken(getNode("hall"), "chicken3", "a chicken");
+        Wumpus w1 = new Wumpus(getNode("hall"), "wumpus1", "a wumpus");
+        Wumpus w2 = new Wumpus(getNode("hall"), "wumpus2", "a wumpus");
+        Wumpus w3 = new Wumpus(getNode("hall"), "wumpus3", "a wumpus");
+
+        creatures.add(c1); creatures.add(c2); creatures.add(c3); creatures.add(w1); creatures.add(w2); creatures.add(w3);
+    }
+
+    public ArrayList<Creature> getCreatures(){
+        return creatures;
     }
 
     public void addNode(String name) {
@@ -172,5 +201,11 @@ public class Graph {
             Graph.Node newRoom = neighborList.get(rand);
             return newRoom;
         }
+
+        public int getNumNeighbors(){
+            return neighbors.size();
+        }
+
+
     }
 }
