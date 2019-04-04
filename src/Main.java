@@ -17,11 +17,11 @@ public class Main {
         g.getNode("dungeon").addItem("flashlight");
         g.getNode("closet").addItem("shirt");
 
-        ArrayList<Creature> creature = new ArrayList<Creature>();
+        ArrayList<Creature> creatures = new ArrayList<Creature>();
         Creature c1 = new Chicken(g.getNode("hall"), "chicken1", "a chicken");
         Creature c2 = new Chicken(g.getNode("hall"), "chicken2", "a chicken");
         Creature c3 = new Chicken(g.getNode("hall"), "chicken3", "a chicken");
-        creature.add(c1); creature.add(c2); creature.add(c3);
+        creatures.add(c1); creatures.add(c2); creatures.add(c3);
 
         Player player = new Player("User", "Person using this computer.");
         player.setCurrentRoom(g.getNode("hall"));
@@ -31,6 +31,7 @@ public class Main {
 
         displayCommands();
         do{
+            System.out.println("***");
             Graph.Node currentRoom = player.getCurrentRoom();
             System.out.println("You are in the " + currentRoom.getName());
             System.out.println("What do you want to do");
@@ -51,8 +52,13 @@ public class Main {
             }
             else if(length >= 8 && response.substring(0,8).equals("add room")) {
                 String roomName = response.substring(9);
-                g.addNode(roomName);
-                g.addDirectedEdge(currentRoom.getName(), roomName);
+                if(g.hasExistingNode(roomName)){
+                    Graph.Node n = g.getNode(roomName);
+                    if(!n.equals(currentRoom)) g.addDirectedEdge(currentRoom, n);
+                } else {
+                    g.addNode(roomName);
+                    g.addDirectedEdge(currentRoom.getName(), roomName);
+                }
             }
             else if( response.equals("quit") ){
                 break;
@@ -83,8 +89,17 @@ public class Main {
             else {
                 displayCommands();
             }
-
+            moveAllCreature(currentRoom, creatures);
         } while(!response.equals("quit"));
+    }
+
+    private static void moveAllCreature(Graph.Node currentRoom, ArrayList<Creature> creatures) {
+        for(Creature c : creatures){
+            c.move(currentRoom);
+            if(c.getCurrentRoom().equals(currentRoom)){
+                System.out.println(c.getName() + " moved into your room!");
+            }
+        }
     }
 
     private static void displayCommands() {
