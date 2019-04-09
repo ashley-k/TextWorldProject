@@ -5,8 +5,10 @@ import java.util.List;
 public class Graph {
     private HashMap<String, Node> nodes;
     private ArrayList<Creature> creatures;
+    private Player player;
 
-    public Graph(){
+    public Graph(Player player){
+        this.player = player;
         nodes = new HashMap<String, Node>();
     }
 
@@ -37,6 +39,10 @@ public class Graph {
         creatures.add(c1); creatures.add(c2); creatures.add(c3);
         creatures.add(w1); creatures.add(w2); creatures.add(w3);
         creatures.add(p1); creatures.add(p2); creatures.add(p3);
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     public ArrayList<Creature> getCreatures(){
