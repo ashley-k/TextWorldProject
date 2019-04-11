@@ -8,11 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         Player player = new Player("User", "Person using this computer.");
-        g = new Graph(player);
-        g.initialize();
+        g = new Graph(player); g.initialize();
         initCommands();
-
-        player.setCurrentRoom(g.getNode("hall"));
 
         String response = "";
         Scanner in = new Scanner(System.in);
@@ -23,8 +20,9 @@ public class Main {
             response = in.nextLine();
 
             Command command = lookupCommand(response);
-            if(command != null)
+            if(command != null) {
                 command.execute();
+            }
             else{
                 if(response.equals("quit")) break;
                 System.out.println("Invalid action.");
