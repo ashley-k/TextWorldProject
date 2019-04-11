@@ -16,9 +16,14 @@ public class Graph {
         addNode("hall", "a long dank hallway");
         addNode("closet", "a dark, dark closet");
         addNode("dungeon", "a cold, empty dungeon");
+        addNode("secret tunnel", "a secret tunnel found in the dungeon that connects to the closet and hall");
+        player.setCurrentRoom(this.getNode("dungeon"));
 
         addDirectedEdge("hall", "dungeon");
         addUndirectedEdge("hall", "closet");
+        addUndirectedEdge("secret tunnel", "dungeon");
+        addDirectedEdge("secret tunnel", "closet");
+        addDirectedEdge("secret tunnel", "hall");
 
         getNode("hall").addItem("backpack");
         getNode("hall").addItem("gun");
@@ -26,19 +31,25 @@ public class Graph {
         getNode("closet").addItem("shirt");
 
         creatures = new ArrayList<Creature>();
-        Creature c1 = new Chicken(getNode("hall"), "chicken1", "a chicken");
-        Creature c2 = new Chicken(getNode("hall"), "chicken2", "a chicken");
-        Creature c3 = new Chicken(getNode("hall"), "chicken3", "a chicken");
+        Creature c1 = new Chicken(getNode(getRandomRoomName()), "chicken1", "a chicken");
+        Creature c2 = new Chicken(getNode(getRandomRoomName()), "chicken2", "a chicken");
+        Creature c3 = new Chicken(getNode(getRandomRoomName()), "chicken3", "a chicken");
         Wumpus w1 = new Wumpus(getNode("hall"), "wumpus1", "a wumpus");
         Wumpus w2 = new Wumpus(getNode("hall"), "wumpus2", "a wumpus");
         Wumpus w3 = new Wumpus(getNode("hall"), "wumpus3", "a wumpus");
-        Popstar p1 = new Popstar(getNode("hall"), "popstar1", "a postar");
+        Popstar p1 = new Popstar(getNode("closet"), "popstar1", "a postar");
         Popstar p2 = new Popstar(getNode("hall"), "popstar2", "a postar");
-        Popstar p3 = new Popstar(getNode("hall"), "popstar3", "a postar");
+        Popstar p3 = new Popstar(getNode("secret tunnel"), "popstar3", "a postar");
 
         creatures.add(c1); creatures.add(c2); creatures.add(c3);
         creatures.add(w1); creatures.add(w2); creatures.add(w3);
         creatures.add(p1); creatures.add(p2); creatures.add(p3);
+    }
+
+    private String getRandomRoomName() {
+        ArrayList<Graph.Node> neighbors = new ArrayList<>(nodes.values());
+        int rand = (int) (Math.random() * neighbors.size());
+        return neighbors.get(rand).getName();
     }
 
     public Player getPlayer(){
@@ -217,6 +228,18 @@ public class Graph {
             return neighbors.size();
         }
 
+        public boolean isWithinTwoStepsOf(String name) {
+            if(this.name.equals(name)) return true;
 
+            for(String roomName1 : neighbors.keySet()){
+                Graph.Node neighbor1 = neighbors.get(roomName1);
+                if(roomName1.equals(name)) return true;
+
+                for(String roomName2 : neighbor1.getNeighborList().keySet()){
+                    if(roomName2.equals(name)) return true;
+                }
+            }
+            return false;
+        }
     }
 }
