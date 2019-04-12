@@ -31,6 +31,7 @@ public abstract class Creature {
         if(nextRoom.equals(playerRoom))
             System.out.println(name + " moved from the " + currentRoom.getName() + " to your room");
     }
+
     public Graph.Node getCurrentRoom() {
         return currentRoom;
     }
