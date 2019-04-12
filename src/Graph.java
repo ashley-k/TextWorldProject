@@ -17,7 +17,7 @@ public class Graph {
         addNode("closet", "a dark, dark closet");
         addNode("dungeon", "a cold, empty dungeon");
         addNode("secret tunnel", "a secret tunnel found in the dungeon that connects to the closet and hall");
-        player.setCurrentRoom(this.getNode("dungeon"));
+        player.setCurrentRoom(this.getNode("hall"));
 
         addDirectedEdge("hall", "dungeon");
         addUndirectedEdge("hall", "closet");
@@ -31,25 +31,40 @@ public class Graph {
         getNode("closet").addItem("shirt");
 
         creatures = new ArrayList<Creature>();
-        Creature c1 = new Chicken(getNode(getRandomRoomName()), "chicken1", "a chicken");
-        Creature c2 = new Chicken(getNode(getRandomRoomName()), "chicken2", "a chicken");
-        Creature c3 = new Chicken(getNode(getRandomRoomName()), "chicken3", "a chicken");
-        Wumpus w1 = new Wumpus(getNode("hall"), "wumpus1", "a wumpus");
-        Wumpus w2 = new Wumpus(getNode("hall"), "wumpus2", "a wumpus");
-        Wumpus w3 = new Wumpus(getNode("hall"), "wumpus3", "a wumpus");
-        Popstar p1 = new Popstar(getNode("closet"), "popstar1", "a postar");
-        Popstar p2 = new Popstar(getNode("hall"), "popstar2", "a postar");
-        Popstar p3 = new Popstar(getNode("secret tunnel"), "popstar3", "a postar");
-
-        creatures.add(c1); creatures.add(c2); creatures.add(c3);
-        creatures.add(w1); creatures.add(w2); creatures.add(w3);
-        creatures.add(p1); creatures.add(p2); creatures.add(p3);
+        initializeRandomChickens(3);
+        initializeRandomWumpus(3);
+        initializeRandomPopstar(3);
     }
 
-    private String getRandomRoomName() {
+    private void initializeRandomChickens(int n) {
+        for(int i = 0; i < n; i++){
+            String name = "chicken" + (i+1);
+            Chicken c = new Chicken(getRandomRoom(), name, "a chicken");
+            creatures.add(c);
+        }
+
+    }
+
+    private void initializeRandomWumpus(int n) {
+        for(int i = 0; i < n; i++){
+            String name = "wumpus" + (i+1);
+            Wumpus w = new Wumpus(getRandomRoom(), name, "a wumpus");
+            creatures.add(w);
+        }
+    }
+
+    private void initializeRandomPopstar(int n) {
+        for(int i = 0; i < n; i++){
+            String name = "popstar" + (i+1);
+            Popstar p = new Popstar(getRandomRoom(), name, "a popstar");
+            creatures.add(p);
+        }
+    }
+
+    private Graph.Node getRandomRoom() {
         ArrayList<Graph.Node> neighbors = new ArrayList<>(nodes.values());
         int rand = (int) (Math.random() * neighbors.size());
-        return neighbors.get(rand).getName();
+        return neighbors.get(rand);
     }
 
     public Player getPlayer(){
